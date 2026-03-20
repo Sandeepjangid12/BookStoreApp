@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Story Book",
+    "title": "Interesting short stories for beginners",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794"
+  },
+  {
+    "id": 2,
+    "name": "Science Book",
+    "title": "Basic science concepts explained simply",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1532012197267-da84d127e765"
+  },
+  {
+    "id": 3,
+    "name": "History Book",
+    "title": "World history overview for students",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f"
+  },
+  {
+    "id": 4,
+    "name": "Math Book",
+    "title": "Learn mathematics step by step",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1553729459-efe14ef6055d"
+  },
+  {
+    "id": 5,
+    "name": "English Grammar",
+    "title": "Master English grammar easily",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d"
+  },
+  {
+    "id": 6,
+    "name": "Programming Book",
+    "title": "Introduction to coding for beginners",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1517433456452-f9633a875f6f"
+  },
+  {
+    "id": 7,
+    "name": "React Guide",
+    "title": "Complete React JS guide",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1581092335878-0c6c4b0d8f5d"
+  },
+  {
+    "id": 8,
+    "name": "Node.js Book",
+    "title": "Backend development using Node.js",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4"
+  },
+  {
+    "id": 9,
+    "name": "Self Help Book",
+    "title": "Improve your mindset and productivity",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1507842217343-583bb7270b66"
+  },
+  {
+    "id": 10,
+    "name": "Motivation Book",
+    "title": "Stay motivated and achieve goals",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1496104679561-38b5c43c8f1b"
+  },
+  {
+    "id": 11,
+    "name": "Business Book",
+    "title": "Learn business strategies",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1553729784-e91953dec042"
+  },
+  {
+    "id": 12,
+    "name": "Finance Book",
+    "title": "Personal finance management basics",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1565372916319-4e2fdb9c89c6"
+  },
+  {
+    "id": 13,
+    "name": "Health Book",
+    "title": "Tips for healthy living",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1510626176961-4b57d4fbad03"
+  },
+  {
+    "id": 14,
+    "name": "Yoga Guide",
+    "title": "Beginner yoga exercises",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1552196563-55cd4e45efb3"
+  },
+  {
+    "id": 15,
+    "name": "Cooking Book",
+    "title": "Delicious recipes for home cooking",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1498579809087-ef1e558fd1da"
+  },
+  {
+    "id": 16,
+    "name": "Travel Book",
+    "title": "Explore amazing travel destinations",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+  },
+  {
+    "id": 17,
+    "name": "Photography Guide",
+    "title": "Learn photography techniques",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+  },
+  {
+    "id": 18,
+    "name": "Design Book",
+    "title": "UI/UX design fundamentals",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1545235617-9465d2a55698"
+  },
+  {
+    "id": 19,
+    "name": "AI Book",
+    "title": "Introduction to artificial intelligence",
+    "price": 0,
+    "category": "free",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995"
+  },
+  {
+    "id": 20,
+    "name": "Cyber Security",
+    "title": "Basics of online security",
+    "price": 0,
+    "category": "paid",
+    "image": "https://images.unsplash.com/photo-1510519138101-570d1dca3d66"
+  }
+]
