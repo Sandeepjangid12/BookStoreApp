@@ -1,62 +1,68 @@
 import React, { useState, useEffect } from 'react'
 import Login from './Login';
+import { useAuth } from '../context/Authprovider';
+import Logout from './Logout';
 
 const Navbar = () => {
-  const [sticky, setSticky] = useState(false)
+    const [authUser, setAuthUser] = useAuth()
+    console.log(authUser);
 
-  const [theme, setTheme] = useState(localStorage.getItem("theme")?localStorage.getItem("theme"):"light")
-const element = document.documentElement;
+    console.log("LOGGED USER 👉", authUser);
+    const [openModal, setOpenModal] = useState(false);
+    const [sticky, setSticky] = useState(false)
+    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light")
+    const element = document.documentElement;
 
-useEffect(() => {
+    useEffect(() => {
 
-    if (theme==="dark") {
-        // for moon
-        element.classList.add("dark");
-        localStorage.setItem("theme","dark")
-        document.body.classList.add("dark");
-
-        
-    }
-    else{
-
-        //for sun 
-         element.classList.remove("dark");
-        localStorage.setItem("theme","light")
-        document.body.classList.remove("dark");
+        if (theme === "dark") {
+            // for moon
+            element.classList.add("dark");
+            localStorage.setItem("theme", "dark")
+            document.body.classList.add("dark");
 
 
-    }
+        }
+        else {
 
-}, [theme])
+            //for sun 
+            element.classList.remove("dark");
+            localStorage.setItem("theme", "light")
+            document.body.classList.remove("dark");
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setSticky(window.scrollY > 0)
-    }
 
-    window.addEventListener('scroll', handleScroll)
+        }
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+    }, [theme])
 
-  const navItems = (
-    <>
-      <li><a href='/'>Home</a></li>
-      <li><a href='/course'>Course</a></li>
-      <li><a href='/contact'>Contact</a></li>
-      <li><a href='/about'>About</a></li>
-    </>
-  )
+    useEffect(() => {
+        const handleScroll = () => {
+            setSticky(window.scrollY > 0)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
+    const navItems = (
+        <>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/course'>Course</a></li>
+            <li><a href='/contact'>Contact</a></li>
+            <li><a href='/about'>About</a></li>
+        </>
+    )
 
 
     return (
         <>
-  <div
-      className={` navbar max-w-screen-2xl bg-white dark:bg-slate-900 dark:text-white container mx-auto md:px-20 px-4 fixed top-0 left-0 right-0 z-50 
+            <div
+                className={` navbar max-w-screen-2xl bg-white dark:bg-slate-900 dark:text-white container mx-auto md:px-20 px-4 fixed top-0 left-0 right-0 z-50 
       ${sticky ? "bg-base-200 dark:bg-slate-900 dark:text-white shadow-md  duration-300" : "bg-base-100"}`}
-    >
+            >
                 <div className="navbar ">
 
                     {/* LEFT */}
@@ -101,7 +107,7 @@ useEffect(() => {
 
                             {/* sun icon */}
                             <svg
-                            onClick={()=>setTheme(theme=="light"?"dark":"light")}
+                                onClick={() => setTheme(theme == "light" ? "dark" : "light")}
                                 className="swap-off h-5 w-5 fill-current"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
@@ -111,7 +117,7 @@ useEffect(() => {
 
                             {/* moon icon */}
                             <svg
-                             onClick={()=>setTheme(theme=="dark"?"light":"dark")}
+                                onClick={() => setTheme(theme == "dark" ? "light" : "dark")}
                                 className="swap-on h-5 w-5 fill-current"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24">
@@ -119,12 +125,18 @@ useEffect(() => {
                                     d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
                             </svg>
                         </label>
-
-                        {/* Login */}
-                        <button  onClick={() =>document.getElementById("my_modal_3").showModal()} className="bg-black text-white rounded-md py-1 px-4 hover:bg-gray-500 duration-300 cursor-pointer">
-                            Login
-                        </button>
-                        <Login/>
+                        {
+                            authUser ? <Logout /> :
+                                <div className="">
+                                    <button
+                                        onClick={() => setOpenModal(true)}
+                                        className="bg-black text-white rounded-md py-1 px-4"
+                                    >
+                                        Login
+                                    </button>
+                                    {openModal && <Login setOpenModal={setOpenModal} />}
+                                </div>
+                        }
 
                     </div>
 

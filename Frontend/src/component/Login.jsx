@@ -1,84 +1,106 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { FaGoogle, FaFacebookF, FaGithub, FaXTwitter } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useAuth } from "../context/Authprovider";
 
-function Login() {
-  const [isLogin, setIsLogin] = useState(true);
 
+
+function Login({ setOpenModal }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const [authUser, setAuthUser] = useAuth();
 
-    // ✅ modal close after submit
-    document.getElementById("my_modal_3").close();
+  const onSubmit = async (data) => {
+
+    const userInfo = {
+
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/user/login",
+        data
+      );
+
+      console.log("RESPONSE 👉", res.data);
+
+   if (res.data.user) {
+  const { password, ...safeUser } = res.data.user;
+
+  localStorage.setItem("Users", JSON.stringify(safeUser));
+
+  setAuthUser(safeUser); // 🔥 THIS FIX
+
+  console.log("LOGGED USER 👉", safeUser);
+}
+      setTimeout(() => {
+        
+        toast.success('Loggedin Successfully ');
+        
+      }, []);
+
+
+      // optional redirect
+      navigate("/");
+
+    } catch (err) {
+      console.log("ERROR 👉", err.response?.data);
+      setTimeout(() => {
+        
+        toast.error("Error: " + err.response?.data?.message);
+      }, []);
+
+    }
+    setOpenModal(false)
+
+  };
+
+  const handleSignup = () => {
+    setOpenModal(false);
+    navigate("/signup");
   };
 
   return (
-    <dialog id="my_modal_3" className="modal">
+    <div className="fixed  inset-0 bg-black/50 flex justify-center items-center z-50">
 
-      {/* Modal Box */}
-      <div
-        className="modal-box relative 
-        bg-gradient-to-r from-[#2c1810] via-[#3e2723] to-[#1b1b1b]
-        border border-white/20 
-        text-white rounded-3xl shadow-2xl"
-      >
+      <div className="bg-white dark:bg-slate-900 dark:text-white p-6 rounded-xl w-96 relative">
 
-        {/* ❌ Close Button */}
-        <form method="dialog">
-          <button className="cursor-pointer absolute right-3 top-3 text-white text-xl">
-            ✕
-          </button>
-        </form>
+        {/* Close */}
+        <button
+          onClick={() => setOpenModal(false)}
+          className="absolute right-2 top-2"
+        >
+          ✕
+        </button>
 
-        {/* Title */}
-        <h2 className="text-3xl font-bold text-center mb-2">
-          {isLogin ? "Welcome Back 👋" : "Create Account 🚀"}
-        </h2>
+        <h2 className="text-xl font-bold mb-4">Login</h2>
 
-        <p className="text-center text-sm text-white/70 mb-6">
-          {isLogin ? "Login to continue" : "Join us and start your journey"}
-        </p>
-
-        {/* ✅ FORM START */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-          {/* Name */}
-          {!isLogin && (
-            <div>
-              <input
-                {...register("name", { required: "Name is required" })}
-                type="text"
-                placeholder="Full Name"
-                className="w-full px-4 py-3 rounded-xl 
-                bg-white/20 placeholder-white/70
-                border border-white/30"
-              />
-              {errors.name && (
-                <p className="text-red-400 text-sm mt-1">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-          )}
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
 
           {/* Email */}
           <div>
             <input
-              {...register("email", { required: "Email is required" })}
-              type="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Enter valid email",
+                },
+              })}
               placeholder="Email"
-              className="w-full px-4 py-3 rounded-xl 
-              bg-white/20 placeholder-white/70
-              border border-white/30"
+              className="w-full border p-2 rounded"
             />
             {errors.email && (
-              <p className="text-red-400 text-sm mt-1">
+              <p className="text-red-500 text-sm">
                 {errors.email.message}
               </p>
             )}
@@ -87,15 +109,19 @@ function Login() {
           {/* Password */}
           <div>
             <input
-              {...register("password", { required: "Password is required" })}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Minimum 6 characters required",
+                },
+              })}
               type="password"
               placeholder="Password"
-              className="w-full px-4 py-3 rounded-xl 
-              bg-white/20 placeholder-white/70
-              border border-white/30"
+              className="w-full border p-2 rounded"
             />
             {errors.password && (
-              <p className="text-red-400 text-sm mt-1">
+              <p className="text-red-500 text-sm">
                 {errors.password.message}
               </p>
             )}
@@ -104,59 +130,25 @@ function Login() {
           {/* Button */}
           <button
             type="submit"
-            className="w-full py-3 rounded-xl cursor-pointer
-            bg-gradient-to-r from-pink-500 to-purple-500 
-            hover:scale-105 transition duration-200 font-semibold"
+            className="w-full bg-pink-500 text-white p-2 rounded"
           >
-            {isLogin ? "Login" : "Create Account"}
+            Login
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="flex items-center my-6">
-          <div className="flex-1 h-[1px] bg-white/30"></div>
-          <span className="px-3 text-sm text-white/70">OR</span>
-          <div className="flex-1 h-[1px] bg-white/30"></div>
-        </div>
-
-        {/* Social Buttons */}
-        <div className="grid grid-cols-2 gap-3">
-
-          <button className="cursor-pointer flex items-center justify-center gap-2 py-2 rounded-xl bg-white/20 hover:bg-white/30 transition">
-            <FaGoogle className="text-red-400" />
-            Google
-          </button>
-
-          <button className="cursor-pointer flex items-center justify-center gap-2 py-2 rounded-xl bg-white/20 hover:bg-white/30 transition">
-            <FaFacebookF className="text-blue-500" />
-            Facebook
-          </button>
-
-          <button className="cursor-pointer flex items-center justify-center gap-2 py-2 rounded-xl bg-white/20 hover:bg-white/30 transition">
-            <FaGithub className="text-white" />
-            GitHub
-          </button>
-
-          <button className="cursor-pointer flex items-center justify-center gap-2 py-2 rounded-xl bg-white/20 hover:bg-white/30 transition">
-            <FaXTwitter className="text-white" />
-            X
-          </button>
-
-        </div>
-
-        {/* Toggle */}
-        <p className="text-sm text-center mt-6 text-white/80">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+        {/* Signup Redirect */}
+        <p className="text-sm text-center mt-4">
+          Don’t have an account?{" "}
           <span
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-pink-400 cursor-pointer hover:underline"
+            onClick={handleSignup}
+            className="text-pink-500 cursor-pointer font-semibold"
           >
-            {isLogin ? "Sign Up" : "Login"}
+            Signup
           </span>
         </p>
 
       </div>
-    </dialog>
+    </div>
   );
 }
 
